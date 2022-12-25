@@ -7,13 +7,68 @@
 </head>
 <body>
 	<script type="text/javascript">
-		let x = 5;
-		x = (x++ , x = addFive(x));
+		// let x = 5;
+		// x = (x++ , x = addFive(x));
+		// console.log('x ==>', x)
 
-		function addFive(num) {
-			return num + 5;
+		// function addFive(num) {
+		// 	return num + 5;
+		// }
+		// console.log(x);
+		function parse(str1) {
+			return Function(`'use strict'; return (${str1})`)()
 		}
-		console.log(x);
+		function StringExpression(str) {
+			let numberTowords = {
+				'zero' : 0,
+				'one' : 1,
+				'two' : 2,
+				'three' : 3,
+				'four' : 4,
+				'five' : 5,
+				'six' : 6,
+				'seven' : 7,
+				'eight' : 8,
+				'nine' : 9,
+				'minus' : '-',
+				'plus' : '+',
+			};
+			let wordsToNumber = {
+				0: 'zero',
+				1: 'one',
+				2: 'three',
+				4: 'four',
+				5: 'five',
+				6: 'six',
+				7: 'seven',
+				8: 'eight',
+				9: 'nine',
+			};
+			let count = 0;
+			let position = 0;
+			let expression = new String('');
+			for(let i =0 ; i<= str.length;i++){
+				if(count == 3 || count == 4 || count == 5) {
+
+				if(numberTowords[str.slice(position, i)] || numberTowords[str.slice(position, i)] == 0){
+					expression += numberTowords[str.slice(position, i)];
+					count = 0;
+					position = i;
+				}
+			}
+			count++;
+		}
+		let value = String(parse(expression));
+		let result = new String('');
+		for(let i =0; i<value.length; i++){
+			if(value[i]== "-")
+			result += 'negative';
+			else if(wordsToNumber[+value[i]])
+			result += wordsToNumber[+value[i]];
+		}
+		return result
+	}
+	console.log(StringExpression("onezeropluseight"));
 	</script>
 </body>
 </html>
